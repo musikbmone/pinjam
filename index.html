@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman Alat Musik - SMAN 1 Babakan Madang (BM One SMART)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg">
+        <div class="marquee-container py-2 text-xs sm:text-sm font-medium text-amber-200">
+            <div class="marquee-content flex items-center space-x-2">
+                <i data-lucide="music" class="w-4 h-4 inline-block text-amber-300"></i>
+                <span id="running-quote" class="tracking-wide"></span>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-indigo-400/30 pb-4">
+                <div class="flex items-center space-x-3 text-center md:text-left">
+                    <div class="w-12 h-12 bg-white/10 rounded-xl backdrop-blur-md flex items-center justify-center p-1.5 border border-white/20 shadow-sm flex-shrink-0">
+                        <img src="logo.png" alt="Logo SMAN 1 Babakan Madang" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold tracking-wide">SMAN 1 Babakan Madang</h1>
+                        <p class="text-xs text-indigo-200">Sistem Peminjaman Inventaris Alat Musik </p>
+                    </div>
+                </div>
+                <div class="text-center md:text-right bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10 w-full md:w-auto">
+                    <div id="realtime-time" class="text-lg sm:text-xl font-extrabold tracking-wider text-yellow-300">00:00:00 WIB</div>
+                    <div id="realtime-date" class="text-xs font-medium text-indigo-100">Minggu, 1 Januari 2026</div>
+                </div>
+            </div>
+
+            <div class="mt-4 flex flex-col md:flex-row justify-between items-center text-sm gap-2">
+                <div class="flex items-center space-x-2 font-semibold text-base sm:text-lg text-amber-300">
+                    <i data-lucide="sparkles" class="w-5 h-5 flex-shrink-0"></i>
+                    <span id="greeting-text">Selamat Datang, Siswa & Siswi BM One SMART!</span>
+                </div>
+                <div class="italic text-indigo-100 text-center md:text-right max-w-xl bg-black/10 px-3 py-1 rounded-md text-xs sm:text-sm">
+                    "<span id="quote-text">Musik adalah bahasa universal manusia.</span>"
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center md:justify-start h-14 overflow-x-auto">
+                <div class="flex space-x-4 sm:space-x-8 whitespace-nowrap">
+                    <a href="#home" class="border-b-2 border-indigo-600 text-indigo-600 inline-flex items-center px-2 sm:px-1 pt-1 text-xs sm:text-sm font-semibold">
+                        <i data-lucide="home" class="w-4 h-4 mr-1.5"></i> Home
+                    </a>
+                    <a href="#form-peminjaman" class="border-b-2 border-transparent text-slate-500 hover:text-indigo-600 hover:border-indigo-300 inline-flex items-center px-2 sm:px-1 pt-1 text-xs sm:text-sm font-medium transition">
+                        <i data-lucide="file-plus" class="w-4 h-4 mr-1.5"></i> Form Pinjam
+                    </a>
+                    <a href="#daftar-peminjaman" class="border-b-2 border-transparent text-slate-500 hover:text-indigo-600 hover:border-indigo-300 inline-flex items-center px-2 sm:px-1 pt-1 text-xs sm:text-sm font-medium transition">
+                        <i data-lucide="list" class="w-4 h-4 mr-1.5"></i> Riwayat Peminjaman
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+        
+        <!-- Banner Ucapan -->
+        <div id="thankYouBanner" class="hidden bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-xl shadow-md transition-all duration-300">
+            <div class="flex items-start justify-between">
+                <div class="flex items-start space-x-3">
+                    <div class="p-2 bg-emerald-100 rounded-lg text-emerald-600">
+                        <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-emerald-900" id="thankYouTitle">Terima Kasih!</h3>
+                        <p class="text-sm text-emerald-800 mt-1" id="thankYouMessage">
+                            Terima kasih kepada <span id="borrowerDisplayName" class="font-bold underline"></span> yang telah meminjam peralatan musik sekolah. 
+                            <strong>Tetap jaga peralatan kita agar awet dan terjaga.</strong>
+                        </p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('thankYouBanner').classList.add('hidden')" class="text-emerald-500 hover:text-emerald-700">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION HOME -->
+        <section id="home" class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-10">
+            <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                <div class="w-28 h-28 sm:w-36 sm:h-36 flex-shrink-0 flex items-center justify-center p-3 bg-slate-50 rounded-2xl border border-slate-200 shadow-inner">
+                    <img src="logo.png" alt="Logo SMAN 1 Babakan Madang" class="max-h-full max-w-full object-contain">
+                </div>
+                <div class="space-y-4 text-center md:text-left flex-grow">
+                    <div>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">Aplikasi Web Sederhana</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Sistem Peminjaman Alat Musik</h2>
+                        <p class="text-indigo-600 font-semibold text-sm sm:text-base mt-1">SMAN 1 Babakan Madang (BM One SMART)</p>
+                    </div>
+                    <div class="p-4 bg-indigo-50/70 border border-indigo-100 rounded-xl text-slate-600 text-xs sm:text-sm leading-relaxed">
+                        <p class="font-medium text-indigo-900 mb-1 flex items-center justify-center md:justify-start gap-1.5">
+                            <i data-lucide="info" class="w-4 h-4 text-indigo-600"></i> Tentang Platform:
+                        </p>
+                        Aplikasi web sederhana untuk mencatat dan mengelola peminjaman alat musik oleh siswa dan siswi di SMAN. 1 Babakan Madang. Platform ini terhubung langsung ke Google Sheets sebagai database online secara real-time. Semoga aplikasi ini dapat membantu pengelolaan peminjaman alat musik. SUKSES SELALU UNTUK KITA ......
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Peminjaman -->
+        <section id="form-peminjaman" class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden scroll-mt-20">
+            <div class="bg-indigo-50 border-b border-indigo-100 px-6 py-4">
+                <h2 class="text-base sm:text-lg font-bold text-indigo-900 flex items-center gap-2">
+                    <i data-lucide="clipboard-edit" class="text-indigo-600 w-5 h-5"></i> Form Peminjaman Alat Musik
+                </h2>
+                <p class="text-xs text-indigo-600 mt-0.5">Isi data identitas dan alat musik yang ingin dipinjam dengan benar.</p>
+            </div>
+
+            <form id="loanForm" class="p-6 md:p-8 space-y-6">
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">Identitas Peminjam</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Peminjam</label>
+                            <input type="text" id="borrowerName" required placeholder="Masukkan Nama Lengkap" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Kelas</label>
+                            <select id="borrowerClass" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition bg-white">
+                                <option value="" disabled selected>Pilih Kelas</option>
+                                <!-- Kelas X -->
+                                <option value="X1">X1</option>
+                                <option value="X2">X2</option>
+                                <option value="X3">X3</option>
+                                <option value="X4">X4</option>
+                                <option value="X5">X5</option>
+                                <option value="X6">X6</option>
+                                <option value="X7">X7</option>
+                                <option value="X8">X8</option>
+                                <option value="X9">X9</option>
+                                <option value="X10">X10</option>
+                                
+                                <!-- Kelas XI -->
+                                <option value="XI1">XI1</option>
+                                <option value="XI2">XI2</option>
+                                <option value="XI3">XI3</option>
+                                <option value="XI4">XI4</option>
+                                <option value="XI5">XI5</option>
+                                <option value="XI6">XI6</option>
+                                <option value="XI7">XI7</option>
+                                <option value="XI8">XI8</option>
+                                <option value="XI9">XI9</option>
+                                <option value="XI10">XI10</option>
+                                
+                                <!-- Kelas XII -->
+                                <option value="XII1">XII1</option>
+                                <option value="XII2">XII2</option>
+                                <option value="XII3">XII3</option>
+                                <option value="XII4">XII4</option>
+                                <option value="XII5">XII5</option>
+                                <option value="XII6">XII6</option>
+                                <option value="XII7">XII7</option>
+                                <option value="XII8">XII8</option>
+                                <option value="XII9">XII9</option>
+                                <option value="XII10">XII10</option>
+                                <option value="XII11">XII11</option>
+                                <option value="XII12">XII12</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2 lg:col-span-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Pinjam Alat Musik</label>
+                            <input type="date" id="loanDate" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">Detail Alat Musik</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Alat Musik</label>
+                            <select id="instrumentName" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition bg-white">
+                                <option value="" disabled selected>Pilih Alat Musik</option>
+                                <option value="Gitar">Gitar</option>
+                                <option value="Drum">Drum</option>
+                                <option value="Keyboard">Keyboard</option>
+                                <option value="Cajon">Cajoon</option>
+                                <option value="Bass">Bass</option>
+                                <option value="Kabel Jack">Kabel Jack</option>
+                                <option value="Strap Gitar">Strap Gitar</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Kondisi Alat Saat Dipinjam</label>
+                            <div class="flex items-center space-x-6 mt-2">
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="radio" name="condition" value="Baik" checked class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="ml-2 text-sm text-slate-700 font-medium flex items-center gap-1">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Baik
+                                    </span>
+                                </label>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="radio" name="condition" value="Rusak" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                                    <span class="ml-2 text-sm text-slate-700 font-medium flex items-center gap-1">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Rusak
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4">
+                    <button type="submit" id="submitBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition duration-200 flex items-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i> <span id="btnText">Ajukan Peminjaman</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabel Riwayat Peminjaman -->
+        <section id="daftar-peminjaman" class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden scroll-mt-20">
+            <div class="bg-slate-50 border-b border-slate-100 px-6 py-4 flex justify-between items-center">
+                <div>
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i data-lucide="table" class="text-indigo-600 w-5 h-5"></i> Daftar Peminjaman Alat Musik
+                    </h2>
+                    <p class="text-xs text-slate-500">Catatan transaksi peminjaman alat musik terhubung dengan Google Sheets.</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100/70 text-slate-600 uppercase text-[11px] font-bold tracking-wider">
+                            <th class="py-3 px-6">No</th>
+                            <th class="py-3 px-6">Nama Peminjam</th>
+                            <th class="py-3 px-6">Kelas</th>
+                            <th class="py-3 px-6">Tanggal Pinjam</th>
+                            <th class="py-3 px-6">Alat Musik</th>
+                            <th class="py-3 px-6">Kondisi</th>
+                            <th class="py-3 px-6 text-center">Pesan Ucapan</th>
+                            <th class="py-3 px-6 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="loanTableBody" class="divide-y divide-slate-100 text-sm">
+                        <tr>
+                            <td colspan="8" class="text-center py-6 text-slate-400">Memuat data dari Google Sheets...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
+        <p>© 2026 BramTogu-BM One SMART . All rights reserved.</p>
+    </footer>
+
+    <!-- Script Logic API & UI -->
+    <script>
+        // PASTE URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI:https://script.google.com/macros/s/AKfycbyp4AoAM-Fb03y8Ef7S3XHyL07mXtSYFV5tc9ekUwl1oc5_utyxdKryjon4pvHIKkKOvg/exec
+        const API_URL = "https://script.google.com/macros/s/AKfycbyp4AoAM-Fb03y8Ef7S3XHyL07mXtSYFV5tc9ekUwl1oc5_utyxdKryjon4pvHIKkKOvg/exec";
+
+        lucide.createIcons();
+
+        // Quotes logic
+        const composerQuotes = [
+            "\"Musik adalah wahyu yang lebih tinggi dari semua kebijaksanaan dan filsafat.\" - Ludwig van Beethoven",
+            "\"Musik tidak ada pada nada-nada, tetapi pada keheningan di antara nada-nada tersebut.\" - Wolfgang Amadeus Mozart",
+            "\"Bermain tanpa passion itu tidak bisa dimaafkan!\" - Ludwig van Beethoven",
+            "\"Seseorang tidak boleh hanya berbicara tentang musik, tetapi seseorang harus mendengarkannya.\" - Wolfgang Amadeus Mozart",
+            "\"Musik dapat mengubah dunia.\" - Ludwig van Beethoven"
+        ];
+
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * composerQuotes.length);
+            document.getElementById('running-quote').textContent = composerQuotes[randomIndex];
+        }
+        getRandomQuote();
+
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('realtime-time').textContent = `${hours}:${minutes}:${seconds} WIB`;
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('realtime-date').textContent = now.toLocaleDateString('id-ID', options);
+
+            const currentHour = now.getHours();
+            let greeting = "";
+            if (currentHour >= 3 && currentHour < 11) greeting = "Selamat Pagi, Siswa & Siswi BMone! ☀️";
+            else if (currentHour >= 11 && currentHour < 15) greeting = "Selamat Siang, Siswa & Siswi BM One SMART ! 🌤️";
+            else if (currentHour >= 15 && currentHour < 18) greeting = "Selamat Sore, Siswa & Siswi BM One SMART ! 🌇";
+            else greeting = "Selamat Malam, Siswa & Siswi BM One SMART ! 🌙";
+            document.getElementById('greeting-text').textContent = greeting;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        function showThankYou(name) {
+            const banner = document.getElementById('thankYouBanner');
+            document.getElementById('borrowerDisplayName').textContent = name;
+            banner.classList.remove('hidden');
+            banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        document.getElementById('loanDate').valueAsDate = new Date();
+
+        // --- GOOGLE SHEETS API INTEGRATION --- //
+
+        // 1. Ambil data dari Google Sheets (READ)
+        async function fetchLoans() {
+            const tableBody = document.getElementById('loanTableBody');
+            try {
+                const response = await fetch(API_URL);
+                const json = await response.json();
+
+                if (json.status === "success") {
+                    tableBody.innerHTML = "";
+                    if (json.data.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">Belum ada data peminjaman.</td></tr>`;
+                        return;
+                    }
+
+                    json.data.forEach((item, index) => {
+                        const conditionBadge = item["Kondisi"] === 'Baik' 
+                            ? `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Baik</span>`
+                            : `<span class="bg-rose-100 text-rose-800 text-xs px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Rusak</span>`;
+
+                        const row = document.createElement('tr');
+                        row.className = "hover:bg-slate-50/80 transition";
+                        row.innerHTML = `
+                            <td class="py-4 px-6 font-medium">${index + 1}</td>
+                            <td class="py-4 px-6 font-semibold text-slate-800">${item["Nama Peminjam"]}</td>
+                            <td class="py-4 px-6">${item["Kelas"]}</td>
+                            <td class="py-4 px-6">${item["Tanggal Pinjam"]}</td>
+                            <td class="py-4 px-6 font-medium text-indigo-600">${item["Alat Musik"]}</td>
+                            <td class="py-4 px-6">${conditionBadge}</td>
+                            <td class="py-4 px-6 text-center">
+                                <button onclick="showThankYou('${item["Nama Peminjam"]}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-1.5 rounded-lg border border-indigo-200 transition flex items-center gap-1 mx-auto">
+                                    <i data-lucide="heart" class="w-3.5 h-3.5 text-indigo-600"></i> Ucapan
+                                </button>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <button onclick="deleteData('${item["ID"]}')" class="text-rose-500 hover:text-rose-700 p-1 rounded-lg hover:bg-rose-50 transition" title="Hapus">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    lucide.createIcons();
+                }
+            } catch (error) {
+                console.error("Gagal mengambil data:", error);
+                tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-rose-500">Gagal memuat data dari database. Pastikan URL API sudah benar.</td></tr>`;
+            }
+        }
+
+        // 2. Tambah data ke Google Sheets (CREATE)
+        const loanForm = document.getElementById('loanForm');
+        loanForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            
+            const payload = {
+                action: "ADD",
+                borrowerName: document.getElementById('borrowerName').value,
+                borrowerClass: document.getElementById('borrowerClass').value,
+                loanDate: document.getElementById('loanDate').value,
+                instrumentName: document.getElementById('instrumentName').value,
+                condition: document.querySelector('input[name="condition"]:checked').value
+            };
+
+            // Loading state
+            submitBtn.disabled = true;
+            btnText.textContent = "Menyimpan...";
+
+            try {
+                await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+
+                showThankYou(payload.borrowerName);
+                loanForm.reset();
+                document.getElementById('loanDate').valueAsDate = new Date();
+                await fetchLoans(); // Refresh data tabel
+            } catch (error) {
+                alert("Gagal menyimpan data ke database!");
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = "Ajukan Peminjaman";
+            }
+        });
+
+        // 3. Hapus data dari Google Sheets (DELETE)
+        async function deleteData(id) {
+            if (!confirm("Apakah Anda yakin ingin menghapus data peminjaman ini?")) return;
+
+            try {
+                await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "DELETE", id: id })
+                });
+                await fetchLoans(); // Refresh data tabel
+            } catch (error) {
+                alert("Gagal menghapus data!");
+                console.error(error);
+            }
+        }
+
+        // Load data awal saat web dibuka
+        fetchLoans();
+    </script>
+</body>
+</html>
