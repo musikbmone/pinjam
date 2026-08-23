@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peminjaman Alat Musik - SMAN 1 Babakan Madang (BM One SMART)</title>
+    <title>BM ONE SMART - Peminjaman Alat Musik SMAN 1 Babakan Madang</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         body {
@@ -20,7 +22,8 @@
             white-space: nowrap;
             box-sizing: border-box;
             width: 100%;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -42,38 +45,50 @@
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col justify-between">
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white shadow-lg">
-        <div class="marquee-container py-2 text-xs sm:text-sm font-medium text-amber-200">
+    <!-- Header Section (Banner Image Header Proporsional) -->
+    <header class="relative bg-slate-900 text-white shadow-md overflow-hidden min-h-[180px] max-h-[220px] flex flex-col justify-between">
+        
+        <!-- Background Banner Image Alat Musik -->
+        <img src="Gemini_Generated_Image_l7yug0l7yug0l7yu.jpg" alt="BM ONE SMART Header" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-80">
+        
+        <!-- Subtle Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-950/70 z-10"></div>
+
+        <!-- Running Text (Dinaikkan Posisinya ke Paling Atas Header) -->
+        <div class="relative z-20 marquee-container py-1.5 text-xs font-medium text-amber-300">
             <div class="marquee-content flex items-center space-x-2">
-                <i data-lucide="music" class="w-4 h-4 inline-block text-amber-300"></i>
+                <i data-lucide="music" class="w-3.5 h-3.5 inline-block text-amber-400"></i>
                 <span id="running-quote" class="tracking-wide"></span>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-indigo-400/30 pb-4">
-                <div class="flex items-center space-x-3 text-center md:text-left">
-                    <div class="w-12 h-12 bg-white/10 rounded-xl backdrop-blur-md flex items-center justify-center p-1.5 border border-white/20 shadow-sm flex-shrink-0">
-                        <img src="logo.png" alt="Logo SMAN 1 Babakan Madang" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div>
-                        <h1 class="text-xl sm:text-2xl font-bold tracking-wide">SMAN 1 Babakan Madang</h1>
-                        <p class="text-xs text-indigo-200">Sistem Peminjaman Inventaris Alat Musik </p>
-                    </div>
+        <!-- Main Header Content -->
+        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto py-2">
+            <div class="flex flex-row justify-between items-center gap-4">
+                
+                <!-- Badge Info -->
+                <div class="text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/30 text-amber-300 border border-amber-500/40 backdrop-blur-md shadow-sm">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> BM ONE SMART
+                    </span>
                 </div>
-                <div class="text-center md:text-right bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10 w-full md:w-auto">
-                    <div id="realtime-time" class="text-lg sm:text-xl font-extrabold tracking-wider text-yellow-300">00:00:00 WIB</div>
-                    <div id="realtime-date" class="text-xs font-medium text-indigo-100">Minggu, 1 Januari 2026</div>
+
+                <!-- Realtime Clock Widget -->
+                <div class="text-right bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/10 shadow-md">
+                    <div id="realtime-time" class="text-sm sm:text-base font-extrabold tracking-wider text-amber-400">00.00.00 WIB</div>
+                    <div id="realtime-date" class="text-[10px] sm:text-xs font-medium text-slate-300">Minggu, 1 Januari 2026</div>
                 </div>
             </div>
+        </div>
 
-            <div class="mt-4 flex flex-col md:flex-row justify-between items-center text-sm gap-2">
-                <div class="flex items-center space-x-2 font-semibold text-base sm:text-lg text-amber-300">
-                    <i data-lucide="sparkles" class="w-5 h-5 flex-shrink-0"></i>
-                    <span id="greeting-text">Selamat Datang, Siswa & Siswi BM One SMART!</span>
+        <!-- Greeting Bar Bottom Header -->
+        <div class="relative z-20 bg-slate-950/60 backdrop-blur-sm py-1.5 px-4 border-t border-white/10">
+            <div class="max-w-7xl mx-auto flex justify-between items-center text-xs">
+                <div class="flex items-center space-x-2 font-medium text-amber-300">
+                    <i data-lucide="user-check" class="w-3.5 h-3.5 flex-shrink-0"></i>
+                    <span id="greeting-text">Selamat Datang, Siswa & Siswi BM One!</span>
                 </div>
-                <div class="italic text-indigo-100 text-center md:text-right max-w-xl bg-black/10 px-3 py-1 rounded-md text-xs sm:text-sm">
+                <div class="hidden sm:block italic text-slate-300 text-right truncate max-w-md">
                     "<span id="quote-text">Musik adalah bahasa universal manusia.</span>"
                 </div>
             </div>
@@ -83,7 +98,7 @@
     <!-- Navigation Bar -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center md:justify-start h-14 overflow-x-auto">
+            <div class="flex justify-center md:justify-start h-12 overflow-x-auto">
                 <div class="flex space-x-4 sm:space-x-8 whitespace-nowrap">
                     <a href="#home" class="border-b-2 border-indigo-600 text-indigo-600 inline-flex items-center px-2 sm:px-1 pt-1 text-xs sm:text-sm font-semibold">
                         <i data-lucide="home" class="w-4 h-4 mr-1.5"></i> Home
@@ -92,7 +107,7 @@
                         <i data-lucide="file-plus" class="w-4 h-4 mr-1.5"></i> Form Pinjam
                     </a>
                     <a href="#daftar-peminjaman" class="border-b-2 border-transparent text-slate-500 hover:text-indigo-600 hover:border-indigo-300 inline-flex items-center px-2 sm:px-1 pt-1 text-xs sm:text-sm font-medium transition">
-                        <i data-lucide="list" class="w-4 h-4 mr-1.5"></i> Riwayat Peminjaman
+                        <i data-lucide="list" class="w-4 h-4 mr-1.5"></i> Riwayat & Grafik
                     </a>
                 </div>
             </div>
@@ -131,15 +146,15 @@
                 </div>
                 <div class="space-y-4 text-center md:text-left flex-grow">
                     <div>
-                        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">Aplikasi Web Sederhana</span>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Sistem Peminjaman Alat Musik</h2>
-                        <p class="text-indigo-600 font-semibold text-sm sm:text-base mt-1">SMAN 1 Babakan Madang (BM One SMART)</p>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">BM ONE SMART SYSTEM</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 mt-2">Aplikasi Peminjaman Alat Musik</h2>
+                        <p class="text-indigo-600 font-semibold text-sm sm:text-base mt-1">SMAN 1 Babakan Madang (BM One)</p>
                     </div>
                     <div class="p-4 bg-indigo-50/70 border border-indigo-100 rounded-xl text-slate-600 text-xs sm:text-sm leading-relaxed">
                         <p class="font-medium text-indigo-900 mb-1 flex items-center justify-center md:justify-start gap-1.5">
                             <i data-lucide="info" class="w-4 h-4 text-indigo-600"></i> Tentang Platform:
                         </p>
-                        Aplikasi web sederhana untuk mencatat dan mengelola peminjaman alat musik oleh siswa dan siswi di SMAN. 1 Babakan Madang. Platform ini terhubung langsung ke Google Sheets sebagai database online secara real-time. Semoga aplikasi ini dapat membantu pengelolaan peminjaman alat musik. SUKSES SELALU UNTUK KITA ......
+                        Aplikasi web sederhana untuk mencatat dan mengelola peminjaman alat musik oleh siswa di SMAN 1 Babakan Madang. Platform ini terhubung langsung ke Google Sheets sebagai database online secara real-time.
                     </div>
                 </div>
             </div>
@@ -166,7 +181,7 @@
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Kelas</label>
                             <select id="borrowerClass" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition bg-white">
                                 <option value="" disabled selected>Pilih Kelas</option>
-                                <!-- Kelas X -->
+                                <!-- KELAS X -->
                                 <option value="X1">X1</option>
                                 <option value="X2">X2</option>
                                 <option value="X3">X3</option>
@@ -177,8 +192,7 @@
                                 <option value="X8">X8</option>
                                 <option value="X9">X9</option>
                                 <option value="X10">X10</option>
-                                
-                                <!-- Kelas XI -->
+                                <!-- KELAS XI -->
                                 <option value="XI1">XI1</option>
                                 <option value="XI2">XI2</option>
                                 <option value="XI3">XI3</option>
@@ -189,8 +203,7 @@
                                 <option value="XI8">XI8</option>
                                 <option value="XI9">XI9</option>
                                 <option value="XI10">XI10</option>
-                                
-                                <!-- Kelas XII -->
+                                <!-- KELAS XII -->
                                 <option value="XII1">XII1</option>
                                 <option value="XII2">XII2</option>
                                 <option value="XII3">XII3</option>
@@ -206,7 +219,8 @@
                             </select>
                         </div>
                         <div class="sm:col-span-2 lg:col-span-1">
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Pinjam Alat Musik</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Pinjam</label>
+                            <!-- Input Tanggal Dikosongkan Secara Default -->
                             <input type="date" id="loanDate" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
                         </div>
                     </div>
@@ -222,7 +236,7 @@
                                 <option value="Gitar">Gitar</option>
                                 <option value="Drum">Drum</option>
                                 <option value="Keyboard">Keyboard</option>
-                                <option value="Cajon">Cajoon</option>
+                                <option value="Cajon">Cajon</option>
                                 <option value="Bass">Bass</option>
                                 <option value="Kabel Jack">Kabel Jack</option>
                                 <option value="Strap Gitar">Strap Gitar</option>
@@ -257,52 +271,97 @@
             </form>
         </section>
 
-        <!-- Tabel Riwayat Peminjaman -->
+        <!-- Section Riwayat & Dashboard Grafik Peminjaman -->
         <section id="daftar-peminjaman" class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden scroll-mt-20">
             <div class="bg-slate-50 border-b border-slate-100 px-6 py-4 flex justify-between items-center">
                 <div>
                     <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <i data-lucide="table" class="text-indigo-600 w-5 h-5"></i> Daftar Peminjaman Alat Musik
+                        <i data-lucide="bar-chart-2" class="text-indigo-600 w-5 h-5"></i> Riwayat & Analisis Peminjaman Alat Musik
                     </h2>
-                    <p class="text-xs text-slate-500">Catatan transaksi peminjaman alat musik terhubung dengan Google Sheets.</p>
+                    <p class="text-xs text-slate-500">Statistik dan data peminjaman alat musik terhubung langsung dengan Google Sheets.</p>
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-100/70 text-slate-600 uppercase text-[11px] font-bold tracking-wider">
-                            <th class="py-3 px-6">No</th>
-                            <th class="py-3 px-6">Nama Peminjam</th>
-                            <th class="py-3 px-6">Kelas</th>
-                            <th class="py-3 px-6">Tanggal Pinjam</th>
-                            <th class="py-3 px-6">Alat Musik</th>
-                            <th class="py-3 px-6">Kondisi</th>
-                            <th class="py-3 px-6 text-center">Pesan Ucapan</th>
-                            <th class="py-3 px-6 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="loanTableBody" class="divide-y divide-slate-100 text-sm">
-                        <tr>
-                            <td colspan="8" class="text-center py-6 text-slate-400">Memuat data dari Google Sheets...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="p-6 space-y-8">
+                
+                <!-- GRID GRAFIK BERDAMPINGAN -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Grafik 1: Pie Chart Alat Musik -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5 self-start">
+                            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i> Alat Musik Terpopuler
+                        </h3>
+                        <div class="relative w-full h-56 flex items-center justify-center">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Grafik 2: Line Chart Minat Per Bulan -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i> Tren Minat Peminjaman Per Bulan
+                        </h3>
+                        <div class="relative w-full h-56">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Grafik 3: Bar Chart Kelas Paling Sering Pinjam -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i> Peminjaman Per Kelas
+                        </h3>
+                        <div class="relative w-full h-56">
+                            <canvas id="classBarChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TABEL DATA -->
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/70 text-slate-600 uppercase text-[11px] font-bold tracking-wider">
+                                <th class="py-3 px-6">No</th>
+                                <th class="py-3 px-6">Nama Peminjam</th>
+                                <th class="py-3 px-6">Kelas</th>
+                                <th class="py-3 px-6">Tanggal Pinjam</th>
+                                <th class="py-3 px-6">Alat Musik</th>
+                                <th class="py-3 px-6">Kondisi</th>
+                                <th class="py-3 px-6 text-center">Pesan Ucapan</th>
+                                <th class="py-3 px-6 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="loanTableBody" class="divide-y divide-slate-100 text-sm">
+                            <tr>
+                                <td colspan="8" class="text-center py-6 text-slate-400">Memuat data dari Google Sheets...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </section>
     </main>
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
-        <p>© 2026 BramTogu-BM One SMART . All rights reserved.</p>
+        <p>© 2026 BramTogu-SMAN 1 Babakan Madang (BM One). All rights reserved.</p>
     </footer>
 
     <!-- Script Logic API & UI -->
     <script>
-        // PASTE URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI:https://script.google.com/macros/s/AKfycbyp4AoAM-Fb03y8Ef7S3XHyL07mXtSYFV5tc9ekUwl1oc5_utyxdKryjon4pvHIKkKOvg/exec
+        // URL WEB APP GOOGLE APPS SCRIPT:
         const API_URL = "https://script.google.com/macros/s/AKfycbyp4AoAM-Fb03y8Ef7S3XHyL07mXtSYFV5tc9ekUwl1oc5_utyxdKryjon4pvHIKkKOvg/exec";
 
         lucide.createIcons();
+
+        // Chart Instance Variables
+        let pieChartInstance = null;
+        let lineChartInstance = null;
+        let classBarChartInstance = null;
 
         // Quotes logic
         const composerQuotes = [
@@ -316,25 +375,50 @@
         function getRandomQuote() {
             const randomIndex = Math.floor(Math.random() * composerQuotes.length);
             document.getElementById('running-quote').textContent = composerQuotes[randomIndex];
+            document.getElementById('quote-text').textContent = composerQuotes[randomIndex].replace(/^"|"$/g, '');
         }
         getRandomQuote();
 
+        // Helper: Format tanggal ISO ke ID
+        function formatDateToID(dateString) {
+            if (!dateString) return "-";
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return new Intl.DateTimeFormat('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).format(date);
+        }
+
+        // Update Waktu Realtime
         function updateTime() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('realtime-time').textContent = `${hours}:${minutes}:${seconds} WIB`;
+            
+            const timeFormatter = new Intl.DateTimeFormat('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Jakarta'
+            });
+            document.getElementById('realtime-time').textContent = `${timeFormatter.format(now).replace(/:/g, '.')} WIB`;
 
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('realtime-date').textContent = now.toLocaleDateString('id-ID', options);
+            const dateFormatter = new Intl.DateTimeFormat('id-ID', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                timeZone: 'Asia/Jakarta'
+            });
+            document.getElementById('realtime-date').textContent = dateFormatter.format(now);
 
             const currentHour = now.getHours();
             let greeting = "";
-            if (currentHour >= 3 && currentHour < 11) greeting = "Selamat Pagi, Siswa & Siswi BMone! ☀️";
-            else if (currentHour >= 11 && currentHour < 15) greeting = "Selamat Siang, Siswa & Siswi BM One SMART ! 🌤️";
-            else if (currentHour >= 15 && currentHour < 18) greeting = "Selamat Sore, Siswa & Siswi BM One SMART ! 🌇";
-            else greeting = "Selamat Malam, Siswa & Siswi BM One SMART ! 🌙";
+            if (currentHour >= 3 && currentHour < 11) greeting = "Selamat Pagi, Siswa & Siswi BM One! ☀️";
+            else if (currentHour >= 11 && currentHour < 15) greeting = "Selamat Siang, Siswa & Siswi BM One! 🌤️";
+            else if (currentHour >= 15 && currentHour < 18) greeting = "Selamat Sore, Siswa & Siswi BM One! 🌇";
+            else greeting = "Selamat Malam, Siswa & Siswi BM One! 🌙";
             document.getElementById('greeting-text').textContent = greeting;
         }
         setInterval(updateTime, 1000);
@@ -347,7 +431,131 @@
             banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        document.getElementById('loanDate').valueAsDate = new Date();
+        // --- DASHBOARD GRAFIK LOGIC --- //
+        function updateCharts(data) {
+            // 1. Data Diagram Pie (Alat Musik)
+            const instrumentCounts = {};
+            const colorPalette = {
+                'Gitar': '#6366f1',
+                'Drum': '#ef4444',
+                'Keyboard': '#10b981',
+                'Cajon': '#f59e0b',
+                'Bass': '#8b5cf6',
+                'Kabel Jack': '#06b6d4',
+                'Strap Gitar': '#ec4899'
+            };
+
+            // 2. Data Diagram Garis (Tren Minat Bulanan)
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
+            const monthlyCounts = Array(12).fill(0);
+
+            // 3. Data Diagram Bar (Peminjaman Per Kelas)
+            const classCounts = {};
+
+            data.forEach(item => {
+                // Count Alat Musik
+                const inst = item["Alat Musik"];
+                if (inst) instrumentCounts[inst] = (instrumentCounts[inst] || 0) + 1;
+
+                // Count Bulan
+                if (item["Tanggal Pinjam"]) {
+                    const d = new Date(item["Tanggal Pinjam"]);
+                    if (!isNaN(d.getTime())) {
+                        monthlyCounts[d.getMonth()] += 1;
+                    }
+                }
+
+                // Count Kelas
+                const cls = item["Kelas"];
+                if (cls) classCounts[cls] = (classCounts[cls] || 0) + 1;
+            });
+
+            // Render Pie Chart
+            const pieLabels = Object.keys(instrumentCounts);
+            const pieValues = Object.values(instrumentCounts);
+            const pieColors = pieLabels.map(label => colorPalette[label] || '#94a3b8');
+
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            if (pieChartInstance) pieChartInstance.destroy();
+            pieChartInstance = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: pieValues,
+                        backgroundColor: pieColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+
+            // Render Line Chart
+            const ctxLine = document.getElementById('lineChart').getContext('2d');
+            if (lineChartInstance) lineChartInstance.destroy();
+            lineChartInstance = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    datasets: [{
+                        label: 'Jumlah Peminjaman',
+                        data: monthlyCounts,
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#4f46e5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } } },
+                        x: { ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Render Bar Chart (Kelas)
+            const classLabels = Object.keys(classCounts);
+            const classValues = Object.values(classCounts);
+
+            const ctxClass = document.getElementById('classBarChart').getContext('2d');
+            if (classBarChartInstance) classBarChartInstance.destroy();
+            classBarChartInstance = new Chart(ctxClass, {
+                type: 'bar',
+                data: {
+                    labels: classLabels,
+                    datasets: [{
+                        label: 'Peminjaman',
+                        data: classValues,
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } } },
+                        x: { ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+        }
 
         // --- GOOGLE SHEETS API INTEGRATION --- //
 
@@ -362,8 +570,12 @@
                     tableBody.innerHTML = "";
                     if (json.data.length === 0) {
                         tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">Belum ada data peminjaman.</td></tr>`;
+                        updateCharts([]);
                         return;
                     }
+
+                    // Update Semua Grafik
+                    updateCharts(json.data);
 
                     json.data.forEach((item, index) => {
                         const conditionBadge = item["Kondisi"] === 'Baik' 
@@ -376,7 +588,7 @@
                             <td class="py-4 px-6 font-medium">${index + 1}</td>
                             <td class="py-4 px-6 font-semibold text-slate-800">${item["Nama Peminjam"]}</td>
                             <td class="py-4 px-6">${item["Kelas"]}</td>
-                            <td class="py-4 px-6">${item["Tanggal Pinjam"]}</td>
+                            <td class="py-4 px-6">${formatDateToID(item["Tanggal Pinjam"])}</td>
                             <td class="py-4 px-6 font-medium text-indigo-600">${item["Alat Musik"]}</td>
                             <td class="py-4 px-6">${conditionBadge}</td>
                             <td class="py-4 px-6 text-center">
@@ -417,7 +629,6 @@
                 condition: document.querySelector('input[name="condition"]:checked').value
             };
 
-            // Loading state
             submitBtn.disabled = true;
             btnText.textContent = "Menyimpan...";
 
@@ -429,8 +640,7 @@
 
                 showThankYou(payload.borrowerName);
                 loanForm.reset();
-                document.getElementById('loanDate').valueAsDate = new Date();
-                await fetchLoans(); // Refresh data tabel
+                await fetchLoans();
             } catch (error) {
                 alert("Gagal menyimpan data ke database!");
                 console.error(error);
@@ -449,14 +659,14 @@
                     method: "POST",
                     body: JSON.stringify({ action: "DELETE", id: id })
                 });
-                await fetchLoans(); // Refresh data tabel
+                await fetchLoans();
             } catch (error) {
                 alert("Gagal menghapus data!");
                 console.error(error);
             }
         }
 
-        // Load data awal saat web dibuka
+        // Load data awal
         fetchLoans();
     </script>
 </body>
